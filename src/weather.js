@@ -21,7 +21,7 @@ class Weather extends React.Component {
               <input placeholder = "Zipcode" onChange={this.handleChange}/>
               <button >Get weather</button>
               <p>{this.state.time}</p> 
-              <p>{this.convertToFahranite(this.state.temprature)}</p>
+              <p>{this.state.temprature}</p>
               <img src={"https://openweathermap.org/img/wn/"+ this.state.icon+".png"}/> 
               
               <p>{this.state.description}</p> 
@@ -40,7 +40,7 @@ class Weather extends React.Component {
     const url = "http://api.openweathermap.org/data/2.5/weather?"+"zip="+zipcode+",us"+"&appid="+weathereApikey;
     const response =  await fetch(url)
     const result =  await response.json();
-    this.setState({temprature: result.main.temp})
+    this.setState({temprature:this.convertToFahranite (result.main.temp)+ " " +"\xB0F"})
     this.setState({description: result.weather[0].description })
     this.setState({icon:result.weather[0].icon })
 
