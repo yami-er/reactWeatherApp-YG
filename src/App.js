@@ -1,4 +1,5 @@
 import React from 'react';
+import Weather from './weather.js';
 const api ={
   key:"681d208ef110da1a5d0eadffa5e29b55",
   base:"https://api.openweathermap.org/data/2.5/"
@@ -33,10 +34,7 @@ function App() {
   <div className="date">{dateBuilder(new Date())}</div>
     </div>
     <div className= "Weather-box">
-      <div className="temp">
-        15c
-      </div>
-      <div className = "weather">Sunny</div>
+      < Weather />
     
     </div>
     </main>

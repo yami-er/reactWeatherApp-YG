@@ -10,7 +10,7 @@ body{
 }
 
 .App{
-  background-image:url('./Assets/coldWeathr-bg.jpg');
+  /* background-image:url('./Assets/coldWeathr-bg.jpg'); */
   background-size: cover;
   background-position:bottom;
   transition: 0.4s ease-out;
