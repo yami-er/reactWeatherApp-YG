@@ -6,6 +6,7 @@ class Weather extends React.Component {
       zipcode:"",
       time:"",
       temprature:"",
+      icon:"",
       description:""
     };
     this.handleChange = this.handleChange.bind(this);
@@ -13,21 +14,57 @@ class Weather extends React.Component {
   }
   render() { 
     return (
-      <div>
-          <h1>What is the weather today?</h1>
-          
+     
+      <div className="App">
+         <h1>What is the weather today?</h1>  
           <form onSubmit={this.handleSubmit}>
               <input placeholder = "Zipcode" onChange={this.handleChange}/>
               <button >Get weather</button>
               <p>{this.state.time}</p> 
-              <p>{this.state.temprature}</p>
-              <p>{this.state.description}</p>
+              <p>{this.convertToFahranite(this.state.temprature)}</p>
+              <img src={"https://openweathermap.org/img/wn/"+ this.state.icon+".png"}/> 
               
+              <p>{this.state.description}</p> 
           </form>
         </div>
       );
   }
-  /* async getWeatherData (zipcode){
+
+  handleChange(e) {
+    this.setState({zipcode: e.target.value });
+  }
+  async handleSubmit(e) {
+    e.preventDefault();
+    const zipcode = this.state.zipcode; 
+    const weathereApikey="34c9a261402ccf438cebedb1dee0a341"
+    const url = "http://api.openweathermap.org/data/2.5/weather?"+"zip="+zipcode+",us"+"&appid="+weathereApikey;
+    const response =  await fetch(url)
+    const result =  await response.json();
+    this.setState({temprature: result.main.temp})
+    this.setState({description: result.weather[0].description })
+    this.setState({icon:result.weather[0].icon })
+
+    
+    var lon = result.coord.lon;
+    var lat = result.coord.lat;
+    const timeApiKey="3HCA50JZWG8Q"
+    var timeApi = "http://api.timezonedb.com/v2.1/get-time-zone?key="+timeApiKey+"&format=json&by=position&lat="+lat+"&lng="+lon
+    const response2 =  await fetch(timeApi)
+    const result2 =  await response2.json();
+    this.setState({time: result2.formatted})
+
+  }
+  convertToFahranite(K){
+    var F =(K - 273.15)* 1.8000 + 32.00
+      return F.toPrecision(2)
+  }
+}
+
+
+export default Weather;
+
+
+     /* async getWeatherData (zipcode){
     var weathereApikey="34c9a261402ccf438cebedb1dee0a341"
     var timeApiKey="3HCA50JZWG8Q"
     var url = "http://api.openweathermap.org/data/2.5/weather?"+"zip="+zipcode+",us"+"&appid="+weathereApikey;
@@ -36,24 +73,11 @@ class Weather extends React.Component {
     var data = await response.json();
     this.setState({ val3: data.weather[0].description })
   } */
-  handleChange(e) {
-    this.setState({zipcode: e.target.value });
-  }
-  async handleSubmit(e) {
-    e.preventDefault();
-    const zipcode = this.state.zipcode; 
-    const weathereApikey="34c9a261402ccf438cebedb1dee0a341"
-    const timeApiKey="3HCA50JZWG8Q"
-    const url = "http://api.openweathermap.org/data/2.5/weather?"+"zip="+zipcode+",us"+"&appid="+weathereApikey;
-    const response =  await fetch(url)
-    const result =  await response.json();
-    this.setState({temprature: result.main.temp })
-    this.setState({description: result.weather[0].description })
     
     
     //var result = this.getWeatherData(zipcode)
     
-    // $.get(weatherApi,function(result){
+    // $.get(weatherApi,function(result){ $("#icon").attr("src","http://openweathermap.org/img/wn/"+ result.weather[0].icon+".png")
       // <div>
       // <ol id="weatherid1" ></ol>
      
@@ -78,11 +102,7 @@ class Weather extends React.Component {
       //       $("#weatherid1").text("Time:"+moment(result.formatted).format('h:mm:ss a'));
       //   })
     // })
-  }
-}
-
-
-export default Weather;
+ 
 
 
 

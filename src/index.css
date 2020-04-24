@@ -1,32 +1,64 @@
 
-*{
+ *{
   margin:0;
   padding:0;
   box-sizing: border-box;
-}
-
+} 
 body{
-  font-family: 'montseratt', sans-serif;
+  background-image:url('./Assets/pic-bg.jpg');
+  background-size: cover;
+  position: relative;
+  background-position:center;
+ 
 }
 
 .App{
-  /* background-image:url('./Assets/coldWeathr-bg.jpg'); */
+  font-family: 'cursive';
+  transition: 0.4s ease-out;
+  color:#fff; 
+  text-align: center;
+  font-size: 40px;
+  font-weight: 900; 
+  text-shadow: 3px 6px rgba(50, 50, 70, 0.5); 
+}
+
+
+/* .App{
+  text-align: center;
+  position: relative;
+  display:inline-block;
+  margin: 30px auto;
+  background-color: rgba (255, 255, 255, 0.2); 
+  background-image:url('./Assets/weather-bg.jpg');
   background-size: cover;
-  background-position:bottom;
+  background-position:center;  
+  border-radius: 100px;  
+  padding: 15px 20px; 
+  color: #fff;
+  font-size: 100px;
+  font-weight: 900; 
+  text-shadow: 3px 6px rgba(50, 50, 70, 0.5);
+
+} */
+
+ /* .App{
+  background-image:url('./Assets/weather-bg.jpg');  
+  background-size: cover;
+  background-position:center;
   transition: 0.4s ease-out;
 }
 
 .App.warm {
   background-image:url('./Assets/warmWeathre-bg.jpg');
-}
+} 
+ */
 
-
-main{
+/* main{
   min-height: 100vh;
-  background-image:linear-gradient(to bottom,rgba(0,0,0,0.2),rgba(0,0,0,0.75)) ; 
-  padding:25px;
+   background-image:linear-gradient(to bottom,rgba(0,0,0,0.2),rgba(0,0,0,0.75)) ;  
+  padding:25px; */
 
-}
+/* } 
 .search-box{
   width:100%;
   margin:0 0 75px;
@@ -69,19 +101,7 @@ main{
   font-style:italic;
   text-shadow:2px 2px rgba(50,50,70,0.5);
   
-}
-.weather-box .temp{
-  position:relative;
-  display: inline-block;
-  margin: 30px auto;
-  background-color: rgba (255, 255, 255, 0.2);
-  border-radius: 16px;
-  padding: 15px 25px;
-  color: #fff;
-  font-size: 102px;
-  font-weight: 900;
-  text-shadow: 3px 6px rgba(50, 50, 70, 0.5);
+} */
+ 
 
 
-
-}
