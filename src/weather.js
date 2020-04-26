@@ -1,4 +1,6 @@
 import React from 'react';
+import Moment from 'react-moment';
+import 'moment-timezone';
 class Weather extends React.Component {
   constructor(props) {
     super(props);
@@ -7,139 +9,81 @@ class Weather extends React.Component {
       time:"",
       temprature:"",
       icon:"",
-      description:""
+      description:"",
+      message:""
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  render() { 
-    return (
-     
-      <div className="App">
-         <h1>What is the weather today?</h1>  
-          <form onSubmit={this.handleSubmit}>
-              <input placeholder = "Zipcode" onChange={this.handleChange}/>
-              <button >Get weather</button>
-              <p>{this.state.time}</p> 
-              <p>{this.state.temprature}</p>
-              <img src={"https://openweathermap.org/img/wn/"+ this.state.icon+".png"}/> 
-              
-              <p>{this.state.description}</p> 
-          </form>
-        </div>
-      );
-  }
-
   handleChange(e) {
     this.setState({zipcode: e.target.value });
   }
   async handleSubmit(e) {
     e.preventDefault();
     const zipcode = this.state.zipcode; 
-    const weathereApikey="34c9a261402ccf438cebedb1dee0a341"
-    const url = "http://api.openweathermap.org/data/2.5/weather?"+"zip="+zipcode+",us"+"&appid="+weathereApikey;
-    const response =  await fetch(url)
-    const result =  await response.json();
-    this.setState({temprature:this.convertToFahranite (result.main.temp)+ " " +"\xB0F"})
-    this.setState({description: result.weather[0].description })
-    this.setState({icon:result.weather[0].icon })
-
-    
-    var lon = result.coord.lon;
-    var lat = result.coord.lat;
-    const timeApiKey="3HCA50JZWG8Q"
-    var timeApi = "http://api.timezonedb.com/v2.1/get-time-zone?key="+timeApiKey+"&format=json&by=position&lat="+lat+"&lng="+lon
-    const response2 =  await fetch(timeApi)
-    const result2 =  await response2.json();
-    this.setState({time: result2.formatted})
-
+    if (zipcode.length===5 && isNaN(zipcode)===false ){
+      this.setState({message:""})
+      const weathereApikey="34c9a261402ccf438cebedb1dee0a341"
+      const weatherApi = "http://api.openweathermap.org/data/2.5/weather?zip="+zipcode+",us&appid="+weathereApikey+"&units=imperial";
+      const response =  await fetch(weatherApi)
+      const result =  await response.json();
+      this.setState({
+          temprature: result.main.temp+ " \xB0F",
+          description: result.weather[0].description,
+          icon:result.weather[0].icon})   
+      const lon = result.coord.lon;
+      const lat = result.coord.lat;
+      const timeApiKey="3HCA50JZWG8Q"
+      const timeApi = "http://api.timezonedb.com/v2.1/get-time-zone?key="+timeApiKey+"&format=json&by=position&lat="+lat+"&lng="+lon
+      const response2 =  await fetch(timeApi)
+      const result2 =  await response2.json();
+      this.setState({time: result2.formatted})
+    }
+    else{
+      this.setState(
+        {
+          zipcode:"",
+          time:"",
+          temprature:"",
+          icon:"",
+          description:"",
+          message:"Please insert a correct zipcode"
+        }
+      )
+     
+    }
   }
   convertToFahranite(K){
     var F =(K - 273.15)* 1.8000 + 32.00
       return F.toPrecision(2)
   }
+  render() { 
+    return (
+     
+      <div className="weatherApp">
+        <div className="title">
+         <h1>What is the weather today?</h1>
+         </div> 
+         <div className="inputForm">
+          <form onSubmit={this.handleSubmit}>
+              <input placeholder = "Zipcode" onChange={this.handleChange}/>
+              <button>Search</button>
+              <p>{this.state.message}</p>
+              <p>{this.state.time}</p> 
+              <p>{this.state.temprature}</p>
+              <img src={"https://openweathermap.org/img/wn/"+ this.state.icon+".png"} alt=''/> 
+              <p>{this.state.description}</p>
+          </form>
+          </div> 
+        </div>
+      );
+  }
+
+  
 }
 
 
 export default Weather;
 
 
-     /* async getWeatherData (zipcode){
-    var weathereApikey="34c9a261402ccf438cebedb1dee0a341"
-    var timeApiKey="3HCA50JZWG8Q"
-    var url = "http://api.openweathermap.org/data/2.5/weather?"+"zip="+zipcode+",us"+"&appid="+weathereApikey;
-    //const url
-    const response = await fetch(url)
-    var data = await response.json();
-    this.setState({ val3: data.weather[0].description })
-  } */
-    
-    
-    //var result = this.getWeatherData(zipcode)
-    
-    // $.get(weatherApi,function(result){ $("#icon").attr("src","http://openweathermap.org/img/wn/"+ result.weather[0].icon+".png")
-      // <div>
-      // <ol id="weatherid1" ></ol>
      
-      // <ol id="weatherid2">(result.weather[0].description)</ol>
-      // <ol id="weatherid3"></ol>
-      // <ol id="weatherid4"></ol>
-      // </div>
- //var s = "http://openweathermap.org/img/wn/"+ result.weather[0].icon+".png"
-      //<img id= "icon" src=s/>
-     // $("#icon").attr("src","http://openweathermap.org/img/wn/"+ result.weather[0].icon+".png")
-      // var weather = (result.weather[0].description);
-      // var temp = (convertToFahranite(result.main.temp));
-      // var temp2 = ("Feels like "+" " +convertToFahranite(result.main.feels_like));
-      // $("#weatherid4").text(weather) 
-      // $("#weatherid2").text(temp+ " " +"\xB0F")
-      // $("#weatherid3").text(temp2+ " " +"\xB0F")
-      
-      // var lon = result.coord.lon;
-      // var lat = result.coord.lat;
-      // var timeApi = "http://api.timezonedb.com/v2.1/get-time-zone?key="+timeApiKey+"&format=json&by=position&lat="+lat+"&lng="+lon
-      // $.get(timeApi,function(result){
-      //       $("#weatherid1").text("Time:"+moment(result.formatted).format('h:mm:ss a'));
-      //   })
-    // })
- 
-
-
-
-/* $(document).ready(
-  function(){
-  function convertToFahranite(K){
-    var F =(K - 273.15)* 1.8000 + 32.00
-      return F.toPrecision(2)
-  }
-  $("#zip").keyup(function(event){
-    if(event.keyCode == 13){
-      $("button#1").click();
-    }         
-  })
-  $("button#1").click(function(){
-    var zipcode = $("#zip").val(); 
-    var weathereApikey="34c9a261402ccf438cebedb1dee0a341"
-    var timeApiKey="3HCA50JZWG8Q"
-    
-    var weatherApi = "http://api.openweathermap.org/data/2.5/weather?"+"zip="+zipcode+",us"+"&appid="+weathereApikey;
-    $.get(weatherApi,function(result){
-      $("#icon").attr("src","http://openweathermap.org/img/wn/"+ result.weather[0].icon+".png")
-      var weather = (result.weather[0].description);
-      var temp = (convertToFahranite(result.main.temp));
-      var temp2 = ("Feels like "+" " +convertToFahranite(result.main.feels_like));
-      $("#weatherid4").text(weather) 
-      $("#weatherid2").text(temp+ " " +"\xB0F")
-      $("#weatherid3").text(temp2+ " " +"\xB0F")
-      
-      var lon = result.coord.lon;
-      var lat = result.coord.lat;
-      var timeApi = "http://api.timezonedb.com/v2.1/get-time-zone?key="+timeApiKey+"&format=json&by=position&lat="+lat+"&lng="+lon
-      $.get(timeApi,function(result){
-            $("#weatherid1").text("Time:"+moment(result.formatted).format('h:mm:ss a'));
-        })
-    })
-  }) 
-})
-
- */
