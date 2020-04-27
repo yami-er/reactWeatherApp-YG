@@ -5,20 +5,17 @@
   box-sizing: border-box;
 }  
 .app-header{
-  /* background-image:url('./Assets/pic3-bg.jpg');
-  background-size: cover;
+  
+   background-size:cover; 
   position: relative;
-  background-position: center; */
-  background-image:url('./Assets/pic3-bg.jpg');
-  background-position: center;
-  background-color: #282c34;
+  background-image:url('./Assets/pic4-bg.jpg');
+  background-position:center; 
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: column; 
+  align-items: center; 
   justify-content: center;
   font-size: calc(10px + 2vmin);
- 
  
 }
 .title{
@@ -27,14 +24,14 @@
   text-align: center;
   font-weight: 900; 
   text-shadow: 3px 6px rgba(50, 50, 70, 0.5);
-  color:goldenrod;
+  color:gold;
   
 }
 .inputForm{
   font-family: cursive;
   text-align: center;
-  color:goldenrod;
-  font-size: 40px;
+  color:gold;
+  font-size: 20px;
   font-weight: 900;
   text-shadow: 3px 6px rgba(50, 50, 70, 0.5);
   
@@ -45,7 +42,7 @@ input{
   background-color:#fff ;
   border-radius:35px;
   margin-top:-25px;
-  font-size: 30px;
+  font-size: 20px;
 
   
 }
@@ -54,7 +51,7 @@ button{
   /* background-color: #fff; */
   border-radius:15px;
   margin-top:-25px;
-  font-size: 30px;
+  font-size: 20px;
   
 }
 
@@ -62,6 +59,14 @@ button{
 
 img{
   width: 100px; 
+}
+
+#temp{
+  font-size: 40px;
+}
+
+#table{
+display: inline-table;
 }
   
 

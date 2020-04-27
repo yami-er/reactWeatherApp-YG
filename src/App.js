@@ -5,9 +5,9 @@ import Weather from './weather.js'
 function App() {
   return (
     <header className="app-header">
-    <div className="App" id ="App">
-        <Weather/>
-    </div>
+      <div className="App" id ="App">
+          <Weather/>
+      </div>
     </header>
   );
 }

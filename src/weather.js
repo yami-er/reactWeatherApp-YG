@@ -6,11 +6,13 @@ class Weather extends React.Component {
     super(props);
     this.state = { 
       zipcode:"",
+      city:"",
       time:"",
       temprature:"",
       icon:"",
       description:"",
       message:""
+
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -28,6 +30,7 @@ class Weather extends React.Component {
       const response =  await fetch(weatherApi)
       const result =  await response.json();
       this.setState({
+          city:result.name,
           temprature: result.main.temp+ " \xB0F",
           description: result.weather[0].description,
           icon:result.weather[0].icon})   
@@ -43,6 +46,7 @@ class Weather extends React.Component {
       this.setState(
         {
           zipcode:"",
+          city:"",
           time:"",
           temprature:"",
           icon:"",
@@ -59,7 +63,6 @@ class Weather extends React.Component {
   }
   render() { 
     return (
-     
       <div className="weatherApp">
         <div className="title">
          <h1>What is the weather today?</h1>
@@ -68,11 +71,22 @@ class Weather extends React.Component {
           <form onSubmit={this.handleSubmit}>
               <input placeholder = "Zipcode" onChange={this.handleChange}/>
               <button>Search</button>
+              <p></p>
               <p>{this.state.message}</p>
-              <p>{this.state.time}</p> 
-              <p>{this.state.temprature}</p>
-              <img src={"https://openweathermap.org/img/wn/"+ this.state.icon+".png"} alt=''/> 
+              <p>{this.state.city}</p>
+              {this.state.time !== "" &&(
+                <p>
+                   <Moment format="LLL">{this.state.time}</Moment>
+                </p>)
+              }
+              <table id="table">
+              <tr >
+                <td><img src={"https://openweathermap.org/img/wn/"+ this.state.icon+".png"} alt=''/></td>
+                <td id="temp">{this.state.temprature}</td>
+              </tr>
+              </table>
               <p>{this.state.description}</p>
+             
           </form>
           </div> 
         </div>
