@@ -26,7 +26,7 @@ class Weather extends React.Component {
     if (zipcode.length===5 && isNaN(zipcode)===false ){
       this.setState({message:""})
       const weathereApikey="34c9a261402ccf438cebedb1dee0a341"
-      const weatherApi = "http://api.openweathermap.org/data/2.5/weather?zip="+zipcode+",us&appid="+weathereApikey+"&units=imperial";
+      const weatherApi = "https://api.openweathermap.org/data/2.5/weather?zip="+zipcode+",us&appid="+weathereApikey+"&units=imperial";
       const response =  await fetch(weatherApi)
       const result =  await response.json();
       this.setState({
@@ -37,7 +37,7 @@ class Weather extends React.Component {
       const lon = result.coord.lon;
       const lat = result.coord.lat;
       const timeApiKey="3HCA50JZWG8Q"
-      const timeApi = "http://api.timezonedb.com/v2.1/get-time-zone?key="+timeApiKey+"&format=json&by=position&lat="+lat+"&lng="+lon
+      const timeApi = "https://api.timezonedb.com/v2.1/get-time-zone?key="+timeApiKey+"&format=json&by=position&lat="+lat+"&lng="+lon
       const response2 =  await fetch(timeApi)
       const result2 =  await response2.json();
       this.setState({time: result2.formatted})
